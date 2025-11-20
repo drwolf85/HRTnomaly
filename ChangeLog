@@ -3,6 +3,7 @@
     * Added `inline` to several functions in `src/cellwise.c`
     * Updated matrix initializations in `R/cellwise.R`
     * Updated matrix initializations in `R/bayeswise.R`
+    * Fixed a typo in `R/zzz.R`
 
 2025-11-18 Luca Sartore <drwolf85@gmail.com>
     * The HRTnomaly package VERSION 25.11.18 has been created

@@ -4,7 +4,7 @@
 
 .onAttach <- function(lib, pkg) {
   if (.Call("isOmp", PACKAGE = "HRTnomaly")) {
-    packageStartupMessage(sprintf("Package compiled with openMP (version released in %f.2)",
+    packageStartupMessage(sprintf("Package compiled with openMP (version released in %.2f)",
       .Call("openMP_version", PACKAGE = "HRTnomaly")))
   }
   else {
