@@ -13,7 +13,8 @@ a set of logical values indicating whether the records are outliers (\code{TRUE}
 }
 
 \usage{
-pif(dta, nt = 100L, nss = NULL, max_depth = 12L, threshold = 0.95, proximity_type = c("single", "paired", "pivotal"), dist_fun = NULL)
+pif(dta, nt = 100L, nss = NULL, max_depth = 12L, threshold = 0.95,
+    proximity_type = c("single", "paired", "pivotal"), dist_fun = NULL)
 }
 
 \arguments{

@@ -2,8 +2,8 @@ Package: HRTnomaly
 Type: Package
 Classification/MSC-2010: 62G86
 Title: Historical, Relational, and Tail Anomaly-Detection Algorithms 
-Version: 25.11.19
-Date: 2025-11-19
+Version: 25.11.20
+Date: 2025-11-20
 Authors@R: c(person(given = "Luca", 
                     family = "Sartore",
                     role = "aut",

@@ -1,3 +1,7 @@
+2025-11-20 Luca Sartore <drwolf85@gmail.com>
+    * The HRTnomaly package VERSION 25.11.20 has been created
+    * Edited `\usage` lines in `man/pif.Rd` up to 90 characters
+
 2025-11-19 Luca Sartore <drwolf85@gmail.com>
     * The HRTnomaly package VERSION 25.11.19 has been created
     * Added `inline` to several functions in `src/cellwise.c`
