@@ -54,7 +54,7 @@ static inline void swap(uint32_t *a, uint32_t *b) {
 static inline void sample(uint32_t nr, uint32_t psi) {
     uint32_t i;
     subs = (uint32_t *) calloc(nr, sizeof(uint32_t));
-    if (subs) { 
+    if (subs) {
         if (psi == nr) {
             // #pragma omp for simd
             for (i = 0; i < nr; i++)
@@ -66,8 +66,8 @@ static inline void sample(uint32_t nr, uint32_t psi) {
                 swap(&subs[i], &subs[(uint32_t) (unif_rand() * (double) nr) % nr]);
         }
         else {
-            free(subs);
-        } 
+        	free(subs);
+        }
     }
 }
 
@@ -104,9 +104,11 @@ static dnn * net_init(uint32_t n_in, uint8_t n_ly) {
 }
 
 static void net_free(dnn *net) {
-    if (net->child) net_free(net->child);
-	free(net->coef);
-	free(net);
+    if (net) {
+	if (net->child) net_free(net->child);
+    	if (net->coef) free(net->coef);
+    	free(net);
+    }
 }
 
 static double complex ** out_vec_alloc(dnn *layer, uint8_t n_ly, uint32_t nr) {
@@ -126,7 +128,7 @@ static double complex ** out_vec_alloc(dnn *layer, uint8_t n_ly, uint32_t nr) {
 static void out_vec_free(double complex **vecs, uint8_t nly) {
     uint8_t i = 0;
     if (vecs) {
-        for (; i <= nly; i++) free(vecs[i]);
+        for (; i <= nly; i++) if (vecs[i]) free(vecs[i]);
         free(vecs);
     }
 }
@@ -221,12 +223,14 @@ static double path_length(double complex *x, uint32_t nv, iTrees *tree, uint8_t 
 }
 
 static void free_tree(iTrees *tree) {
-    free(tree->lincon);
-    if (tree->type) {
-        free_tree(tree->left);
-        free_tree(tree->right);
+    if (tree) {
+	if (tree->lincon) free(tree->lincon);
+    	if (tree->type) {
+        	free_tree(tree->left);
+        	free_tree(tree->right);
+    	}
+    	free(tree);
     }
-    free(tree);
 }
 
 static void iso_model(uint32_t t, double *res, double complex *dta_row_maj, uint32_t nr, uint32_t nv, uint32_t psi) {
@@ -321,8 +325,8 @@ static void iso_model(uint32_t t, double *res, double complex *dta_row_maj, uint
             }
         }
     }
-    free(subs);
-    free(proj);
+    if (subs) free(subs);
+    if (proj) free(proj);
     out_vec_free(vecs, nly);    
     free_tree(mytree);
 }
@@ -354,8 +358,8 @@ extern void dif(double *res, double *dta, int *dimD, int *nt, int *nss) {
         }
     }
     PutRNGstate();
-    free(dta_row_major);
-    free(H);
+    if (dta_row_major) free(dta_row_major);
+    if (H) free(H);
 }
 
 /*

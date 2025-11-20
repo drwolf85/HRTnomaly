@@ -9,7 +9,13 @@ Authors: <img src="man/figures/logo.svg" align="right" alt="HRTnomaly logo" styl
 
 Maintainer: [Luca Sartore](mailto://drwolf85@gmail.com)
 
+[![](https://www.r-pkg.org/badges/version/HRTnomaly)](https://CRAN.R-project.org/package=HRTnomaly)
 [![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL3-088800.svg)](https://www.gnu.org/licenses/agpl-3.0.en.html)
+[![DOI](https://zenodo.org/badge/doi/10.6339/24-JDS1136.svg)](https://www.researchgate.net/profile/Luca-Sartore-2/publication/382981292_Identifying_Anomalous_Data_Entries_in_Repeated_Surveys/links/66d4cb242390e50b2c268732/Identifying-Anomalous-Data-Entries-in-Repeated-Surveys.pdf)
+[![DOI](https://zenodo.org/badge/doi/10.3390/stats7040073.svg)](https://www.researchgate.net/profile/Luca-Sartore-2/publication/385085550_Empirical_Inferences_Under_Bayesian_Framework_to_Identify_Cellwise_Outliers/links/671501df09ba2d0c760eab89/Empirical-Inferences-Under-Bayesian-Framework-to-Identify-Cellwise-Outliers.pdf)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/HRTnomaly)](https://www.r-pkg.org/pkg/HRTnomaly)
+[![Total Downloads from CRAN RStudio mirror](https://cranlogs.r-pkg.org/badges/grand-total/HRTnomaly?color=orange)](https://CRAN.R-project.org/package=HRTnomaly)
+[![Mentioned in Awesome Official Statistics ](https://awesome.re/mentioned-badge.svg)](https://github.com/SNStatComp/awesome-official-statistics-software)
 
 *This research was supported by the U.S. Department of Agriculture, National Agriculture Statistics Service. The findings and conclusions in this publication are those of the authors and should not be construed to represent any official USDA, or US Government determination or policy.*
 

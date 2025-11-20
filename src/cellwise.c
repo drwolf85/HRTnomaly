@@ -38,11 +38,11 @@ static int cmp_dbl(const void *aa, const void *bb) {
     double b = *(double *) bb;
     if (!isfinite(a) && isfinite(b)) return 1;
     if (isfinite(a) && !isfinite(b)) return -1;
-    if (isfinite(a) && isfinite(b)) return 2 * (a >= b) - 1;
+    if (isfinite(a) && isfinite(b)) return 2 * (a > b) - 1;
     return 0;
 }
 
-static double median_wna(double *x, int n) {
+static inline double median_wna(double *x, int n) {
     int i, nf = 0;
     double m = 0.0;
     double *y = (double *) malloc(n * sizeof(double));
@@ -55,13 +55,13 @@ static double median_wna(double *x, int n) {
             qsort(y, n, sizeof(double), cmp_dbl);
             i = nf >> 1;
             m = y[i];
-            if (!(nf & 1)) {/* Adjust if even */
+            if (!(nf & 1) && i > 0) {/* Adjust if even */
                 m += y[i - 1];
                 m *= 0.5;
             }
         }
     }
-    free(y);
+    if (y) free(y);
     return m;
 }
 
@@ -75,7 +75,7 @@ static double median_wna(double *x, int n) {
 * @param zeroMedian {0, 1} flag, if zero computes the median, otherwise assumes median equal to zero
 * @param dataUpdate {0, 1} flag, if zero does not update the data, otherwise update `dta` with "standardized residuals"
 */
-static void scoring_tails(double *scores, double *dta, int n, int p, char zeroMedian, char dataUpdate) {
+static inline void scoring_tails(double *scores, double *dta, int n, int p, char zeroMedian, char dataUpdate) {
     int i, j, nm;
     double mae, tmp, m;
     #if __VOPENMP
@@ -136,7 +136,7 @@ static void scoring_tails(double *scores, double *dta, int n, int p, char zeroMe
 * @param x pointer to the vector of current data (unsorted)
 * @param len length of the vectors in input to this function
 */
-static void format_check(double *zScore, double *x, int *len) {
+static inline void format_check(double *zScore, double *x, int *len) {
       int i;
       int const n = *len;
       #if __VOPENMP
@@ -156,7 +156,7 @@ static void format_check(double *zScore, double *x, int *len) {
 * @param n number of records
 * @param p number of variables
 */
-static void history_check(double *hScore, double *x, double *w, int n, int p) {
+static inline void history_check(double *hScore, double *x, double *w, int n, int p) {
     int i;
     #if __VOPENMP
     #pragma omp parallel for private(i)
@@ -176,7 +176,7 @@ static void history_check(double *hScore, double *x, double *w, int n, int p) {
 * @param n number of records
 * @param p number of variables
 */
-static void tail_check(double *tScore, double *dta, int n, int p) {
+static inline void tail_check(double *tScore, double *dta, int n, int p) {
       int i;
       #if __VOPENMP
       #pragma omp parallel for private(i)
@@ -196,7 +196,7 @@ static void tail_check(double *tScore, double *dta, int n, int p) {
 * @param B input matrix (column-major format) on the right of the product
 * @param dimB number of rows and columns of the matrix B
 */
-static void dgemm(double *res, double *A, int *dimA, double *B, int *dimB) {
+static inline void dgemm(double *res, double *A, int *dimA, double *B, int *dimB) {
     int i, j, k;
     int b, c;
     if (dimA[1] == dimB[0]) {
@@ -223,7 +223,7 @@ static void dgemm(double *res, double *A, int *dimA, double *B, int *dimB) {
 * @param E input matrix of data to normalize
 * @param dim array containing the number of rows and columns
 */
-static void normalize(double *E, int *dim) {
+static inline void normalize(double *E, int *dim) {
     int i, j;
     double mae;
     int nm;
@@ -259,13 +259,12 @@ static void normalize(double *E, int *dim) {
 * @param dta a (n x p) matrix of data (stored by column, i.e. column-major format)
 * @param dim an integer array storing the number of data points (n) and number of variables (p)
 */
-static void init_param(double *mat, double *dta, int *dim) {
+static inline void init_param(double *mat, double *dta, int *dim) {
     int i, j, k, n;
     double tmp, x, y;
     int const p = dim[1];
-    double const ip = 1.0 / (double) p;
     #if __VOPENMP
-    #pragma omp parallel for private(i, j, k, n) collapse(2)
+    #pragma omp parallel for private(i, j, k, n, tmp, x, y) collapse(2)
     #endif
     for (i = 0; i < p; i++) {
         for (j = 0; j < p; j++) {
@@ -284,8 +283,8 @@ static void init_param(double *mat, double *dta, int *dim) {
                         n++;
                     }
                 }
-                if (n > 0) mat[p * j + i] = tmp * ip / (double) n;
-                    mat[p * i + j] = mat[p * j + i];
+                if (n > 0) mat[p * j + i] = tmp / (double) n;
+                mat[p * i + j] = mat[p * j + i];
             }
         }
     }
@@ -304,7 +303,7 @@ static void init_param(double *mat, double *dta, int *dim) {
 * @param R Pointer to a matrix of parameters
 * @param dimR Pointer to a vector of dimension for the matrix `R`
 */
-static void residuals(double *res, double *A, int *dimA, double *R, int *dimR) {
+static inline void residuals(double *res, double *A, int *dimA, double *R, int *dimR) {
     int i, j, pos;
     dgemm(res, A, dimA, R, dimR); /* Matrix multiplication `A %*% R`*/
     #if __VOPENMP
@@ -341,18 +340,18 @@ static void mat_val_grad(double *grd_v, double *param, int *len, void *info) {
     memset(grd_v, 0, *len * sizeof(double));
     /* Computing the gradient */
     #if __VOPENMP
-    #pragma omp parallel for private(i, j, tmp, slp) collapse(2)
+    #pragma omp parallel for private(i, j, k, tmp, slp) collapse(2)
     #endif
     for (i = 0; i < p; i++) {
         for (j = 0; j < p; j++) {
             slp = 0.0;
             if (i != j) for (k = 0; k < n; k++) {
-                tmp = dta.E[n * j + k];
+                tmp = dta.E[n * i + k];
                 tmp = (double) (tmp > 0.0) - (double) (tmp < 0.0);
-                if (isfinite(dta.A[p * k + j]))
-                    slp += dta.A[p * k + j] * tmp;
+                if (isfinite(dta.A[n * j + k]))
+                    slp += dta.A[n * j + k] * tmp;
             } /* This assure that the diagonal is zero (by assumption/constraint) */
-            grd_v[p * i + j ] = slp;
+            grd_v[p * i + j] = slp;
         }
     }
     #if _VOPENMP
@@ -372,18 +371,16 @@ static void mat_val_grad(double *grd_v, double *param, int *len, void *info) {
 * @param info a pointer to a structure that contains the data and other information
 * @param grad a routine that computes the gradient of the objective function
 */
-static void lion(double *param, int *len, int *n_iter, void *info,
+static inline void lion(double *param, int *len, int *n_iter, void *info,
           void (*grad)(double *, double *, int *, void *)) {
     int t, i, np = *len;
     double *grd_v;
     double *mom_m;
-    double *mom_c;
     double sgn;
 
     grd_v = (double *) malloc(np * sizeof(double));
-    mom_c = (double *) malloc(np * sizeof(double));
     mom_m = (double *) calloc(np, sizeof(double));
-    if (mom_m && mom_c && grd_v) {
+    if (mom_m && grd_v) {
         for (t = 0; t < *n_iter; t++) {
             /* Update the gradient */
             (*grad)(grd_v, param, len, info);
@@ -392,12 +389,11 @@ static void lion(double *param, int *len, int *n_iter, void *info,
             #endif
             for (i = 0; i < np; i++) {
                 /* Lion update of custom momentum */
-                mom_c[i] = BETA_1 * mom_m[i] + (1.0 - BETA_1) * grd_v[i];
+                sgn = BETA_1 * mom_m[i] + (1.0 - BETA_1) * grd_v[i];
+                sgn = (double) (sgn > 0.0) - (double) (sgn < 0.0);
                 /* Update the momentum */
                 mom_m[i] *= BETA_2;
-                mom_m[i] +=  (1.0 - BETA_2) * grd_v[i];
-                /* Lion update */
-                sgn = (double) (mom_c[i] > 0.0) - (double) (mom_c[i] < 0.0);
+                mom_m[i] += (1.0 - BETA_2) * grd_v[i];
                 /* Computing the step */
                 grd_v[i] = sgn + FACTOR_P * param[i];
                 grd_v[i] *= LEARNING_RATE;
@@ -405,9 +401,8 @@ static void lion(double *param, int *len, int *n_iter, void *info,
             }
         }
     }
-    free(mom_c);
-    free(mom_m);
-    free(grd_v);
+    if (mom_m) free(mom_m);
+    if (grd_v) free(grd_v);
 } 
 
 /**
@@ -416,7 +411,7 @@ static void lion(double *param, int *len, int *n_iter, void *info,
 * @param A input matrix of data (including NAs)... also used to store the output
 * @param dim array containing the number of rows and columns
 */
-static void relat_check(double *rScore, double *A, int *dim) {
+static inline void relat_check(double *rScore, double *A, int *dim) {
     mydata_str mydata;
     double *E, *R;
     double tmp;
@@ -431,11 +426,12 @@ static void relat_check(double *rScore, double *A, int *dim) {
         mydata.dimA = dim;
         dimR[0] = dimR[1] = dim[1];
         lenR = dim[1] * dim[1];
-    /* Computes robust regression coefficients */
+    	/* Computes robust regression coefficients */
         init_param(R, A, dim);
         for (i = 0; i < N_EPOCHS; i++)
             lion(R, &lenR, &n_iter, (void *) &mydata, mat_val_grad);
-    /* Residual standardization */
+    	/* Residual standardization */
+	residuals(E, A, dim, R, dimR);
         normalize(E, dim);
         /* Compute the relational score */
         if (BAYES) {
@@ -456,8 +452,8 @@ static void relat_check(double *rScore, double *A, int *dim) {
             }
         }
     }
-    free(E);
-    free(R);
+    if (E) free(E);
+    if (R) free(R);
 }
  
 /**
@@ -678,6 +674,7 @@ int main() {
         printf("\n");
     }
     printf("\n");
+    N_EPOCHS = 5;
     printf("Testing \e[1;31mrelat_check\e[0m:\n");
     memset(s, 0, sizeof(double) * 28);
     relat_check(s, x, dim7);

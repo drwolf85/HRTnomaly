@@ -224,11 +224,13 @@ static iTrees ** iForest(double *X, int *dimX, int *nt, int *nss) {
     if (Forest && proj) for (i = 0; i < t; i++) {
             sample(nr, psi);
             init_proj(nr, psi);
-            if (subs) Forest[i] = iTree(X, 0, psi, nr, nv, 0, l);
-            free(subs);
+            if (subs) {
+		Forest[i] = iTree(X, 0, psi, nr, nv, 0, l);
+		free(subs);
+	    }
     }
     PutRNGstate();
-    free(proj);
+    if (proj) free(proj);
     return Forest;
 }
 
@@ -286,12 +288,14 @@ static double enhanced_anomaly_score(double *x, int nv, iTrees **Forest, int *t,
  * @param tree 
  */
 static void free_tree(iTrees *tree) {
-    free(tree->lincon);
-    if (tree->type) {
-        free_tree(tree->left);
-        free_tree(tree->right);
+    if (tree) {
+        if (tree->lincon) free(tree->lincon);
+        if (tree->type) {
+            free_tree(tree->left);
+            free_tree(tree->right);
+        }
+        free(tree);
     }
-    free(tree);
 }
 
 /**
@@ -305,7 +309,7 @@ static inline void free_forest(iTrees **Forest, int *t) {
     for (i = 0; i < (uint32_t) *t; i++) {
         free_tree(Forest[i]);
     }
-    free(Forest);
+    if (Forest) free(Forest);
 }
 
 extern void gif(double *res, double *dta, int *dimD, int *nt, int *nss) {
@@ -333,8 +337,8 @@ extern void gif(double *res, double *dta, int *dimD, int *nt, int *nss) {
         }
         free_forest(forest, nt);
     }
-    free(H);
-    free(dat);
+    if (H) free(H);
+    if (dat) free(dat);
 }
 
 /*

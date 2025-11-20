@@ -6,7 +6,7 @@
 \title{Deep Isolation Forest}
 
 \description{
-The function builds a deep isolation forest that uses fuzzy logic to determine if a record is anomalous on not.
+The function builds a deep isolation forest that uses fuzzy logic to determine if a record is anomalous or not.
 The function takes a wide-format \code{data.frame} object as input and returns it with two appended vectors.
 The first vector contains the anomaly scores as numbers between zero and one, and the second vector provides 
 a set of logical values indicating whether the records are outliers (\code{TRUE}) or not (\code{FALSE}).
@@ -33,7 +33,7 @@ The use of the R-packages \code{dplyr}, \code{purrr}, and \code{tidyr} is highly
 
 \value{The wide-format \code{data.frame} is provided as input data and contains extra columns, i.e., for both anomaly scores and the outlier flags.}
 
-\author{Luca Scellwise artore \email{drwolf85@gmail.com}}
+\author{Luca Sartore \email{drwolf85@gmail.com}}
 
 \examples{
 # Load the package

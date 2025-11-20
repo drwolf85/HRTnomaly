@@ -6,7 +6,7 @@
 \title{Calculate Cellwise Flags for Anomaly Detection Using Bayesian Testing}
 
 \description{
-The function uses the predictive posterior distribution based on emprical likelihoods to determine if a data entry is an outlier on not.
+The function uses the predictive posterior distribution based on emprical likelihoods to determine if a data entry is an outlier or not.
 The function takes a long-format \code{data.frame} object as input and returns it with two appended vectors.
 The first vector contains the posterior probabilities as numbers between zero and one, and the second vector provides 
 a set of logical values indicating whether the data entry is an outlier (\code{TRUE}) or not (\code{FALSE}).

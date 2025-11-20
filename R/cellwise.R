@@ -14,7 +14,11 @@ cellwise <- function(a, contamination = 0.08, epochs = 1000L) {
   dtap <- dtap[ord, ]
   xc <- as.matrix(dtac[, -1L:-2L]) # Current
   xp <- as.matrix(dtap[, -1L:-2L]) # Past
-  s <- z <- h <- r <- t <- matrix(0, nrow(xc), ncol(xc))
+  s <- matrix(0, nrow(xc), ncol(xc))
+  z <- matrix(0, nrow(xc), ncol(xc))
+  h <- matrix(0, nrow(xc), ncol(xc))
+  r <- matrix(0, nrow(xc), ncol(xc))
+  t <- matrix(0, nrow(xc), ncol(xc))
   scores <- .C("cellwise", s = s, z = z, h = h, r = r, t = t, xc, xp,
                dim(xc), epochs, NAOK = TRUE, PACKAGE = "HRTnomaly")
   scores$s <- as.data.frame(scores$s)

@@ -6,7 +6,7 @@
 \title{Calculate Cellwise Flags for Anomaly Detection Using Robust Bayesian Methods}
 
 \description{
-The function uses a Bayesian approach to determine if a data entry is an outlier on not.
+The function uses a Bayesian approach to determine if a data entry is an outlier or not.
 The function takes a long-format \code{data.frame} object as input and returns it with two appended vectors.
 The first vector contains the posterior probabilities for a cell to be anomalous, and the second vector provides 
 a set of logical values indicating whether the data entry is an outlier (\code{TRUE}) or not (\code{FALSE}).

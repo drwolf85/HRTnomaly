@@ -37,7 +37,11 @@ bayeswise <- function(a, prior = NULL, epochs = 1000L) {
   xc <- as.matrix(dtac[, -1L:-2L]) # Current
   xp <- as.matrix(dtap[, -1L:-2L]) # Past
   s <- as.matrix(dtas[, -1L:-2L]) # Prior Prob.
-  g <- z <- h <- r <- t <- matrix(0, nrow(xc), ncol(xc))
+  g <- matrix(0, nrow(xc), ncol(xc))
+  z <- matrix(0, nrow(xc), ncol(xc))
+  h <- matrix(0, nrow(xc), ncol(xc))
+  r <- matrix(0, nrow(xc), ncol(xc))
+  t <- matrix(0, nrow(xc), ncol(xc))
   storage.mode(g) <- "integer"
   storage.mode(s) <- "double"
   scores <- .C("bayeswise", s = s, G = g, z = z, h = h, r = r, t = t, xc, xp,

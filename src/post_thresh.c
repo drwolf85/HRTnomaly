@@ -105,7 +105,7 @@ static double emp_per(int b, double *s, int N, double theta) {
 			res /= lf;
 		}
 	}
-	free(w);
+	if (w) free(w);
 	return res;
 }
 

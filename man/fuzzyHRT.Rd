@@ -8,7 +8,7 @@
 }
 
 \description{
-The function uses fuzzy logic to determine if a data entry is an outlier on not.
+The function uses fuzzy logic to determine if a data entry is an outlier or not.
 The function takes a long-format \code{data.frame} object as input and returns it with two appended vectors.
 The first vector contains the anomaly scores as numbers between zero and one, and the second vector provides 
 a set of logical values indicating whether the data entry is an outlier (\code{TRUE}) or not (\code{FALSE}).

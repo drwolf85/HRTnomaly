@@ -58,7 +58,7 @@ double median(double *x, size_t n) {
 			u = v + range; /* Set the maximum of the optial bin */
 		} while (range > EPS_TOLL && count++ < MAX_ITER); /* Repeat while the conditions are both true */
 	}
-	free(wts);
+	if (wts) free(wts);
 	return v;
 }
 
@@ -100,7 +100,7 @@ void group_normalize(double *res, double *dta, int *dim, int *gr, int g) {
 			}
 		}
 	}
-	free(x);
+	if (x) free(x);
 }
 
 /**
@@ -157,7 +157,7 @@ void history_check(double *hScore, double *zScore, double *x, double *w, int *n)
 			hScore[i] = tmp < 1.0 ? tmp : 1.0;
 		}
 	}
-	free(hdta);
+	if (hdta) free(hdta);
 }
 
 /**
@@ -196,7 +196,7 @@ void group_tail(double *res, double *dta, int *dim, int *gr, int g) {
 			}
 		}
 	}
-	free(x);
+	if (x) free(x);
 }
 
 /**
@@ -287,8 +287,8 @@ void col_check(double *E, double *A, int *dim, int s) {
 			E[*dim * s + j] = tmp >= 1.0 ? 1.0 : tmp;
 		}
 	}
-	free(Q);
-	free(qty);
+	if (Q) free(Q);
+	if (qty) free(qty);
 }
 
 /**
@@ -315,7 +315,7 @@ void relat_check(double *A, int *dim) { /** FIXME: introduce new pointer in inpu
 			A[i] = E[i];
 		}
 	}
-	free(E);
+	if (E) free(E);
 }
 
 /****************************************************/
@@ -439,8 +439,8 @@ void col_res(double *E, double *A, int *dim, int s) { /** FIXME: introduce new p
 			E[*dim * s + j] *= v;
 		}
 	}
-	free(Q);
-	free(qty);
+	if (Q) free(Q);
+	if (qty) free(qty);
 }
 
 /**
@@ -467,5 +467,5 @@ void relat_res(double *A, int *dim) {
 			A[i] = E[i];
 		}
 	}
-	free(E);
+	if (E) free(E);
 }
