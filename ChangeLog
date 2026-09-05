@@ -1,3 +1,10 @@
+2026-09-05 Luca Sartore <drwolf85@gmail.com>
+    * The HRTnomaly package VERSION 26.09.05 has been created
+    * Updated `README.md` file with current GitHub version
+    * Updated `inst/INSTALL.md` file with current GitHub version
+    * Updated `src/Makefile.win` file to include compiling flags
+    * Updated `DESCRIPTION` file with current information
+
 2026-08-22 Luca Sartore <drwolf85@gmail.com>
     * The HRTnomaly package VERSION 26.08.22 has been created
     * Replaced `master` with `masked` in OpenMP statements in

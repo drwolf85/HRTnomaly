@@ -15,7 +15,7 @@ Maintainer: [Luca Sartore](mailto://drwolf85@gmail.com)
 [![DOI](https://zenodo.org/badge/doi/10.3390/stats7040073.svg)](https://www.researchgate.net/profile/Luca-Sartore-2/publication/385085550_Empirical_Inferences_Under_Bayesian_Framework_to_Identify_Cellwise_Outliers/links/671501df09ba2d0c760eab89/Empirical-Inferences-Under-Bayesian-Framework-to-Identify-Cellwise-Outliers.pdf)
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/HRTnomaly)](https://www.r-pkg.org/pkg/HRTnomaly)
 [![Total Downloads from CRAN RStudio mirror](https://cranlogs.r-pkg.org/badges/grand-total/HRTnomaly?color=orange)](https://CRAN.R-project.org/package=HRTnomaly)
-[![GitHub](https://img.shields.io/badge/GitHub-26.8.23-yellow)](https://github.com/drwolf85/HRTnomaly)
+[![GitHub](https://img.shields.io/badge/GitHub-26.9.5-yellow)](https://github.com/drwolf85/HRTnomaly)
 [![Mentioned in Awesome Official Statistics ](https://awesome.re/mentioned-badge.svg)](https://github.com/SNStatComp/awesome-official-statistics-software)
 
 *This research was supported by the U.S. Department of Agriculture, National Agriculture Statistics Service. The findings and conclusions in this publication are those of the authors and should not be construed to represent any official USDA, or US Government determination or policy.*
