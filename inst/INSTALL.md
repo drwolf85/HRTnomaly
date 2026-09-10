@@ -28,6 +28,12 @@ To update all the installed packages to the last version available, the followin
 update.packages(ask = FALSE)
 ```
 
+On Windows, avoid updating packages in the same R session that is loading them for development work. If `devtools::install()` prompts for updates and reports `Permission denied` while replacing package DLLs, restart R and install with:
+
+```{R}
+devtools::install(upgrade = "never")
+```
+
 ## Package management
 
 ### Installing the stable release of the HRTnomaly package
@@ -49,6 +55,8 @@ On **Windows**, by opening the command prompt (`cmd.exe`), it is possible to poi
 ```{bash}
 Rcmd.exe INSTALL HRTnomaly_26.9.6.tar.gz
 ```
+
+If the package is being installed from source on Windows, make sure Rtools is installed and on `PATH` before running `Rcmd.exe INSTALL` or `devtools::install()`.
 
 More details can be found on the "Installing packages" section of the [R-admin](https://cran.r-project.org/doc/manuals/R-admin.html) manual.
 
