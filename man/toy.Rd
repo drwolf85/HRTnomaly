@@ -22,7 +22,7 @@ Synthetically produced data are provided to test the algorithms in the package.
  }
 }
 
-\source{\href{https://www.github.com/drwolf85/HRTnomaly/blob/master/data/toy.rda}{HRTnomaly} R package.}
+\source{\href{https://github.com/drwolf85/HRTnomaly/blob/master/data/toy.rda}{HRTnomaly} R package.}
 
 \examples{
 # Load the package
