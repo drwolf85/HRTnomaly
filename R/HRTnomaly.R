@@ -5,11 +5,7 @@
 #' @rawNamespace importFrom("stats", "model.matrix")
 #' @rawNamespace importFrom("stats", "na.omit")
 #' @rawNamespace importFrom("stats", "sd")
-#' @rawNamespace exportPattern("^[^.]")
-#' @rawNamespace export(.onLoad)
-#' @rawNamespace export(.onAttach)
 #' @rawNamespace useDynLib(HRTnomaly, .registration = TRUE, .fixes = "C_")
-#' @rawNamespace S3method(HRTnomaly::print, checkwise)
 #'
 #' @name HRTnomaly-package
 #' 

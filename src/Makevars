@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 PKG_CFLAGS = $(SHLIB_OPENMP_CFLAGS) -I./mimalloc/include -DMI_STATIC_LIB -DMI_XMALLOC=0 -DMI_SHOW_ERRORS=0 -DMI_SECURE=1 -DMI_CRAN_COMPLIANT=1
 PKG_LIBS = $(SHLIB_OPENMP_CFLAGS) -lpthread
 
@@ -12,3 +13,11 @@ mimalloc/static.o: mimalloc/src/static.c
 
 $(SHLIB): mimalloc/static.o
 
+=======
+PKG_CFLAGS=$(SHLIB_OPENMP_CFLAGS)
+PKG_LIBS=$(SHLIB_OPENMP_CFLAGS)
+
+SOURCES=HRTnomaly.c cellwise.c fuzzyHRT.c pif.c bayes_hppc.c dif.c gif.c post_thresh.c init.c
+
+OBJECTS=$(SOURCES:.c=.o)
+>>>>>>> pr/11
