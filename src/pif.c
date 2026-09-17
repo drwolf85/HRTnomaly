@@ -129,7 +129,7 @@ static int cmp_pivotal_vec(void const *aa, void const *bb) {
 
 /**
  * @brief Binary search for single prototype
- * 
+ *
  * @param vec Pointer to a presorted vector of length n
  * @param n Number of values in the array `vec`
  * @param v Value to determine the split of the vector
@@ -149,10 +149,10 @@ static inline int binary_search_signle(dblvec *vec, int n, double v) {
 
 /**
  * @brief Binary search for two prototypes
- * 
+ *
  * @param vec Pointer to a presorted vector of length n
  * @param n Number of values in the array `vec`
- * @return int Poisition of the first element in the array 
+ * @return int Poisition of the first element in the array
  *             where the left distance is greater than the right distance
  */
 static inline int binary_search_paired(dblvec *vec, int n) {
@@ -169,10 +169,10 @@ static inline int binary_search_paired(dblvec *vec, int n) {
 
 /**
  * @brief Binary search for two prototypes and pivot one
- * 
+ *
  * @param vec Pointer to a presorted vector of length n
  * @param n Number of values in the array `vec`
- * @return int Poisition of the first element in the array 
+ * @return int Poisition of the first element in the array
  *             where the left distance is greater than the right distance
  */
 static inline int binary_search_pivotal(dblvec *vec, int n) {
@@ -199,9 +199,9 @@ static inline int binary_search_pivotal(dblvec *vec, int n) {
  * @param k Current Depth of the node in the tree
  * @param l Maximum Depth of the tree
  * @param dst_fun S-Expression for a distance (or dissimilarity) function
- * @param Rnv S-Expression for an R environment 
+ * @param Rnv S-Expression for an R environment
  */
-static void pit_single(node *nd, dblvec *idx, 
+static void pit_single(node *nd, dblvec *idx,
                        int n, int k, int l,
                        SEXP dst_fun, SEXP Rnv) {
     int whp, i;
@@ -256,9 +256,9 @@ static void pit_single(node *nd, dblvec *idx,
  * @param k Current Depth of the node in the tree
  * @param l Maximum Depth of the tree
  * @param dst_fun S-Expression for a distance (or dissimilarity) function
- * @param Rnv S-Expression for an R environment 
+ * @param Rnv S-Expression for an R environment
  */
-static void pit_paired(node *nd, dblvec *idx, 
+static void pit_paired(node *nd, dblvec *idx,
                        int n, int k, int l,
                        SEXP dst_fun, SEXP Rnv) {
     int whp, i;
@@ -287,7 +287,7 @@ static void pit_paired(node *nd, dblvec *idx,
                 INTEGER(id)[0] = nd->proto_right;
                 defineVar(install("j"), id, Rnv);
                 dst = eval(dst_fun, Rnv);
-                idx[i].vr[0] = *(REAL(dst));                
+                idx[i].vr[0] = *(REAL(dst));
             }
             nd->proto_left--;
             nd->proto_right--;
@@ -320,9 +320,9 @@ static void pit_paired(node *nd, dblvec *idx,
  * @param k Current Depth of the node in the tree
  * @param l Maximum Depth of the tree
  * @param dst_fun S-Expression for a distance (or dissimilarity) function
- * @param Rnv S-Expression for an R environment 
+ * @param Rnv S-Expression for an R environment
  */
-static void pit_pivot(node *nd, dblvec *idx, 
+static void pit_pivot(node *nd, dblvec *idx,
                        int n, int k, int l,
                        SEXP dst_fun, SEXP Rnv) {
     int whp, i;
@@ -364,7 +364,7 @@ static void pit_pivot(node *nd, dblvec *idx,
                 INTEGER(id)[0] = nd->proto_right;
                 defineVar(install("j"), id, Rnv);
                 dst = eval(dst_fun, Rnv);
-                idx[i].vr[0] = *(REAL(dst));                
+                idx[i].vr[0] = *(REAL(dst));
                 idx[i].vr[1] = idx[0].vr[1];
                 INTEGER(id)[0] = nd->proto;
                 defineVar(install("j"), id, Rnv);
@@ -403,12 +403,12 @@ static void pit_pivot(node *nd, dblvec *idx,
  * @param subs Number of subsamples to randomly select from the dataset `*dt`
  * @param l Maximum Depth of the tree
  * @param dst_fun S-Expression for a distance (or dissimilarity) function
- * @param Rnv S-Expression for an R environment 
- * 
+ * @param Rnv S-Expression for an R environment
+ *
  * @return a pointer to the memory containing an array of nested `node` structures
  */
-static inline node * train_pif(int prx, int nt, int n, 
-                               int subs, int l, 
+static inline node * train_pif(int prx, int nt, int n,
+                               int subs, int l,
                                SEXP dst_fun, SEXP Rnv) {
     int i, j;
     node *roots = (node *) mi_calloc(nt, sizeof(node));
@@ -445,11 +445,11 @@ static inline node * train_pif(int prx, int nt, int n,
 
 /**
  * @brief Compute the isolation score (or path length) for single prototype
- * 
+ *
  * @param tr Pointer to a tree in the forest
- * @param e current path length 
+ * @param e current path length
  * @param dst_fun S-Expression for a metric function of choice
- * @param Rnv S-Expression for an R environment used 
+ * @param Rnv S-Expression for an R environment used
  *
  * @return double Isolation score
  */
@@ -474,18 +474,18 @@ static double path_length_signle(node *tr, int e,
 
 /**
  * @brief Compute the anomaly score of a proximity isolation forest for single prototype
- * 
+ *
  * @param x Index to a data point in the data set
  * @param forest Pointer to a trained foreset
  * @param nt Number of trees in the forest
  * @param nss Number of subsamples used to construct the trees in the forest
  * @param dst_fun S-Expression for a metric function of choice
- * @param Rnv S-Expression for an R environment used 
+ * @param Rnv S-Expression for an R environment used
  *
- * @return double 
+ * @return double
  */
-static inline double fuzzy_anomaly_score_single(int x, node *forest, 
-                                                int nt, int nss, 
+static inline double fuzzy_anomaly_score_single(int x, node *forest,
+                                                int nt, int nss,
                                                 SEXP dst_fun, SEXP Rnv) {
 	int i;
 	double avglen = 1.0;
@@ -504,11 +504,11 @@ static inline double fuzzy_anomaly_score_single(int x, node *forest,
 
 /**
  * @brief Compute the isolation score (or path length) for two prototypes
- * 
+ *
  * @param tr Pointer to a tree in the forest
- * @param e current path length 
+ * @param e current path length
  * @param dst_fun S-Expression for a metric function of choice
- * @param Rnv S-Expression for an R environment used 
+ * @param Rnv S-Expression for an R environment used
  *
  * @return double Isolation score
  */
@@ -526,11 +526,11 @@ static double path_length_paired(node *tr, int e,
         INTEGER(id)[0] = tr->proto_left + 1;
         defineVar(install("j"), id, Rnv);
         dst = eval(dst_fun, Rnv);
-        ds[0] = REAL(dst)[0];        
+        ds[0] = REAL(dst)[0];
         INTEGER(id)[0] = tr->proto_right + 1;
         defineVar(install("j"), id, Rnv);
         dst = eval(dst_fun, Rnv);
-        ds[1] = REAL(dst)[0];        
+        ds[1] = REAL(dst)[0];
         double ans = path_length_paired(ds[0] <= ds[1] ? tr->left : tr->right, e + 1, dst_fun, Rnv);
         UNPROTECT(2);
         return ans;
@@ -539,18 +539,18 @@ static double path_length_paired(node *tr, int e,
 
 /**
  * @brief Compute the anomaly score of a proximity isolation forest for two prototypes
- * 
+ *
  * @param x Index to a data point in the data set
  * @param forest Pointer to a trained foreset
  * @param nt Number of trees in the forest
  * @param nss Number of subsamples used to construct the trees in the forest
  * @param dst_fun S-Expression for a metric function of choice
- * @param Rnv S-Expression for an R environment used 
+ * @param Rnv S-Expression for an R environment used
  *
- * @return double 
+ * @return double
  */
-static inline double fuzzy_anomaly_score_paired(int x, node *forest, 
-                                                int nt, int nss, 
+static inline double fuzzy_anomaly_score_paired(int x, node *forest,
+                                                int nt, int nss,
                                                 SEXP dst_fun, SEXP Rnv) {
 	int i;
 	double avglen = 1.0;
@@ -569,12 +569,12 @@ static inline double fuzzy_anomaly_score_paired(int x, node *forest,
 
 /**
  * @brief Compute the isolation score (or path length) for two prototypes and pivot one
- * 
+ *
  * @param x Index to a data point in the data set
  * @param tr Pointer to a tree in the forest
- * @param e current path length 
+ * @param e current path length
  * @param dst_fun S-Expression for a metric function of choice
- * @param Rnv S-Expression for an R environment used 
+ * @param Rnv S-Expression for an R environment used
  *
  * @return double Isolation score
  */
@@ -601,7 +601,7 @@ static double path_length_pivotal(int x, node *tr, int e,
         INTEGER(id)[0] = tr->proto_right + 1;
         defineVar(install("j"), id, Rnv);
         dst = eval(dst_fun, Rnv); /* Pivotal distance from the right prototype */
-        ds[1] = REAL(dst)[0]; 
+        ds[1] = REAL(dst)[0];
 
         INTEGER(id)[0] = x + 1; /* Observational point */
         defineVar(install("i"), id, Rnv);
@@ -610,17 +610,17 @@ static double path_length_pivotal(int x, node *tr, int e,
         defineVar(install("j"), id, Rnv);
         dst = eval(dst_fun, Rnv); /* Observational distance from the left prototype */
         ds[2] = REAL(dst)[0];
-        
+
         INTEGER(id)[0] = tr->proto_right + 1;
         defineVar(install("j"), id, Rnv);
         dst = eval(dst_fun, Rnv); /* Observational distance from the right prototype */
         ds[3] = REAL(dst)[0];
-        
+
         INTEGER(id)[0] = tr->proto + 1; /* Pivotal prototype */
         defineVar(install("j"), id, Rnv);
         dst = eval(dst_fun, Rnv); /* Observational distance from the pivotal prototype */
         ds[4] = REAL(dst)[0];
-        
+
         double al = 2.0 * ds[2] / (ds[2] + ds[0] + ds[4]);
         double ar = 2.0 * ds[3] / (ds[3] + ds[1] + ds[4]);
         double ans = path_length_pivotal(x, al <= ar ? tr->left : tr->right, e + 1, dst_fun, Rnv);
@@ -631,18 +631,18 @@ static double path_length_pivotal(int x, node *tr, int e,
 
 /**
  * @brief Compute the anomaly score of a proximity isolation forest for two prototypes and pivot one
- * 
+ *
  * @param x Index to a data point in the data set
  * @param forest Pointer to a trained foreset
  * @param nt Number of trees in the forest
  * @param nss Number of subsamples used to construct the trees in the forest
  * @param dst_fun S-Expression for a metric function of choice
- * @param Rnv S-Expression for an R environment used 
+ * @param Rnv S-Expression for an R environment used
  *
- * @return double 
+ * @return double
  */
-static inline double fuzzy_anomaly_score_pivotal(int x, node *forest, 
-                                                int nt, int nss, 
+static inline double fuzzy_anomaly_score_pivotal(int x, node *forest,
+                                                int nt, int nss,
                                                 SEXP dst_fun, SEXP Rnv) {
 	int i;
 	double avglen = 1.0;
@@ -656,16 +656,17 @@ static inline double fuzzy_anomaly_score_pivotal(int x, node *forest,
 }
 
 /**
+ * @wrapper C_pif
  * @brief R-warpper for Proximity Isolation Forests
- * 
- * @param dta S-Expression for an input list of data 
+ *
+ * @param dta S-Expression for an input list of data
  * @param _prx S-Expression for the type of proximity isolation forest
  * @param _nt S-Expression for the total number of trees in the trained forest
- * @param _nss S-Expression for the number of subsamples 
+ * @param _nss S-Expression for the number of subsamples
  * @param max_depth S-Expression for the maximum depth of a tree in the forest
  * @param dst_fun S-Expression for a metric function of choice
- * @param Rnv S-Expression for an R environment used 
- * @return SEXP 
+ * @param Rnv S-Expression for an R environment used
+ * @return SEXP
  */
 extern SEXP pif(SEXP dta, SEXP _prx, SEXP _nt, SEXP _nss, SEXP max_depth, SEXP dst_fun, SEXP Rnv) {
 	SEXP res;
@@ -704,7 +705,7 @@ extern SEXP pif(SEXP dta, SEXP _prx, SEXP _nt, SEXP _nss, SEXP max_depth, SEXP d
             case 3: /* Pivotal algorithm */
             for (i = 0; i < n; i++)
                 REAL(res)[i] = fuzzy_anomaly_score_pivotal(i, forest, nt, nss, dst_fun, Rnv);
-            break;                        
+            break;
             default: /* Single algorithm*/
             for (i = 0; i < n; i++)
                 REAL(res)[i] = fuzzy_anomaly_score_single(i, forest, nt, nss, dst_fun, Rnv);
@@ -719,4 +720,3 @@ extern SEXP pif(SEXP dta, SEXP _prx, SEXP _nt, SEXP _nss, SEXP max_depth, SEXP d
 	UNPROTECT(6);
 	return res;
 }
-

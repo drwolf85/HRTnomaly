@@ -60,7 +60,7 @@ static inline void sample(uint32_t nr, uint32_t psi) {
             // #pragma omp for simd
             for (i = 0; i < nr; i++)
                 subs[i] = 1;
-        } 
+        }
         else if (psi < nr) {
             for (i = 0; i < psi; i++) subs[i] = 1;
             for (i = 0; i < nr; i++) /** FIXME: change rand because it is not good for openMP */
@@ -263,7 +263,7 @@ static void iso_model(uint32_t t, double *res, double complex *dta_row_maj, uint
         for (j = 0; j < next->n_out; j++) {
             rlx = rln = creal(vecs[l][j]);
             imx = imn = cimag(vecs[l][j]);
-            for (i = 1; i < nr; i++) {  
+            for (i = 1; i < nr; i++) {
                 tmp_db = creal(vecs[l][next->n_out * i + j]);
                 rlx += (double) (tmp_db > rlx) * (tmp_db - rlx);
                 rln += (double) (tmp_db < rln) * (tmp_db - rln);
@@ -293,7 +293,7 @@ static void iso_model(uint32_t t, double *res, double complex *dta_row_maj, uint
             for (j = 0; j < next->n_out; j++) {
                 rlx = rln = creal(vecs[l][j]);
                 imx = imn = cimag(vecs[l][j]);
-                for (i = 1; i < nr; i++) {  
+                for (i = 1; i < nr; i++) {
                     tmp_db = creal(vecs[l][next->n_out * i + j]);
                     rlx += (double) (tmp_db > rlx) * (tmp_db - rlx);
                     rln += (double) (tmp_db < rln) * (tmp_db - rln);
@@ -328,10 +328,19 @@ static void iso_model(uint32_t t, double *res, double complex *dta_row_maj, uint
     }
     if (subs) mi_free(subs);
     if (proj) mi_free(proj);
-    out_vec_free(vecs, nly);    
+    out_vec_free(vecs, nly);
     free_tree(mytree);
 }
 
+/**
+ * @wrapper C_dif
+ * @brief Deep Isolation Forest
+ * @param res Pointer to a vector of type `double` used to store the results
+ * @param dta Pointer to a matrix of data (in column-major format)
+ * @param dimD Pointer to the number of rows and columns of `dta`
+ * @param nt Pointer to the number of deep isolation trees to grow
+ * @param nss Pointer to the number of subsamples used for training
+ */
 extern void dif(double *res, double *dta, int *dimD, int *nt, int *nss) {
     uint32_t i, t;
     /* srand(time(NULL)); */
@@ -341,7 +350,7 @@ extern void dif(double *res, double *dta, int *dimD, int *nt, int *nss) {
         mi_malloc(dimD[0] * dimD[1] * sizeof(double complex));
     if (dta_row_major && H) {
         H[0] = 1.0;
-        for (i = 1; i < (uint32_t) *nss; i++) 
+        for (i = 1; i < (uint32_t) *nss; i++)
             H[i] = H[i - 1] + 1.0 / (1.0 + (double) i);
         for (i = 0; i < dimD[0]; i++) {
             for (t = 0; t < dimD[1]; t++) {
@@ -387,4 +396,3 @@ int main() {
     return 0;
 }
 #endif
-

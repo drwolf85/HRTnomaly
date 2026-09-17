@@ -54,11 +54,11 @@ static inline double mnm_ada_lr(double *cx, double *ox, double *cg, double *og, 
 }
 
 /**
-* A `mydata_str` is a structure with the following properties:
-* @property {double *} E - A pointer to the matrix of residuals
-* @property {double *) A - A pointer to the matrix of data
-* @property {int} dimA - A pointer to the dimensions of the matrix `A`
-*/
+ * A `mydata_str` is a structure with the following properties:
+ * @property {double *} E - A pointer to the matrix of residuals
+ * @property {double *) A - A pointer to the matrix of data
+ * @property {int} dimA - A pointer to the dimensions of the matrix `A`
+ */
 typedef struct {
       double *E;
       double *A;
@@ -144,16 +144,16 @@ static inline double wmedian_wna(double *x, double *w, int n) {
 }
 
 /**
-* @brief Generic scoring function for weighted tail and historical outliers
-*
-* @param scores vector of real numbers where to store the results of this algorithm
-* @param dta matrix of (unsorted) data
-* @param wt vector of record-level anomaly scores (used as weights)
-* @param n number of records
-* @param p number of variables
-* @param zeroMedian {0, 1} flag, if zero computes the median, otherwise assumes median equal to zero
-* @param dataUpdate {0, 1} flag, if zero does not update the data, otherwise update `dta` with "standardized residuals"
-*/
+ * @brief Generic scoring function for weighted tail and historical outliers
+ *
+ * @param scores vector of real numbers where to store the results of this algorithm
+ * @param dta matrix of (unsorted) data
+ * @param wt vector of record-level anomaly scores (used as weights)
+ * @param n number of records
+ * @param p number of variables
+ * @param zeroMedian {0, 1} flag, if zero computes the median, otherwise assumes median equal to zero
+ * @param dataUpdate {0, 1} flag, if zero does not update the data, otherwise update `dta` with "standardized residuals"
+ */
 static inline void wscoring_tails(double *scores, double *dta, double *wt, int n, int p, char zeroMedian, char dataUpdate) {
     int i, j;
     double nm, mae, tmp, m;
@@ -207,15 +207,15 @@ static inline void wscoring_tails(double *scores, double *dta, double *wt, int n
 }
 
 /**
-* @brief Generic scoring function for tail and historical outliers
-*
-* @param scores vector of real numbers where to store the results of this algorithm
-* @param dta matrix of (unsorted) data
-* @param n number of records
-* @param p number of variables
-* @param zeroMedian {0, 1} flag, if zero computes the median, otherwise assumes median equal to zero
-* @param dataUpdate {0, 1} flag, if zero does not update the data, otherwise update `dta` with "standardized residuals"
-*/
+ * @brief Generic scoring function for tail and historical outliers
+ *
+ * @param scores vector of real numbers where to store the results of this algorithm
+ * @param dta matrix of (unsorted) data
+ * @param n number of records
+ * @param p number of variables
+ * @param zeroMedian {0, 1} flag, if zero computes the median, otherwise assumes median equal to zero
+ * @param dataUpdate {0, 1} flag, if zero does not update the data, otherwise update `dta` with "standardized residuals"
+ */
 static inline void scoring_tails(double *scores, double *dta, int n, int p, char zeroMedian, char dataUpdate) {
     int i, j, nm;
     double mae, tmp, m;
@@ -268,15 +268,15 @@ static inline void scoring_tails(double *scores, double *dta, int n, int p, char
     }
 }
 
- 
+
 /**
-* @brief Scoring system for zeros (i.e.,
-* checking consistency with data format)
-*
-* @param zScore pointer to an empty vector (for the output of zeros or negative values)
-* @param x pointer to the vector of current data (unsorted)
-* @param len length of the vectors in input to this function
-*/
+ * @brief Scoring system for zeros (i.e.,
+ * checking consistency with data format)
+ *
+ * @param zScore pointer to an empty vector (for the output of zeros or negative values)
+ * @param x pointer to the vector of current data (unsorted)
+ * @param len length of the vectors in input to this function
+ */
 static inline void format_check(double *zScore, double *x, int *len) {
       int i;
       int const n = *len;
@@ -289,14 +289,14 @@ static inline void format_check(double *zScore, double *x, int *len) {
 }
 
 /**
-* @brief Scoring system for zeros and historical outliers
-*
-* @param hScore pointer to an empty matrix (for the output of historical outliers)
-* @param x pointer to the matrix of current data (unsorted)
-* @param w pointer to the matrix of previous data (unsorted)
-* @param n number of records
-* @param p number of variables
-*/
+ * @brief Scoring system for zeros and historical outliers
+ *
+ * @param hScore pointer to an empty matrix (for the output of historical outliers)
+ * @param x pointer to the matrix of current data (unsorted)
+ * @param w pointer to the matrix of previous data (unsorted)
+ * @param n number of records
+ * @param p number of variables
+ */
 static inline void history_check(double *hScore, double *x, double *w, int n, int p) {
     int i;
     #if __VOPENMP
@@ -308,15 +308,15 @@ static inline void history_check(double *hScore, double *x, double *w, int n, in
     }
     scoring_tails(hScore, w, n, p, 1, 0);
 }
- 
+
 /**
-* @brief Scoring system based on tail-outlier identification
-*
-* @param tScore matrix of real numbers where to store the results of this algorithm
-* @param dta matrix of data (unsorted... they will be standardized at the end of this routine)
-* @param n number of records
-* @param p number of variables
-*/
+ * @brief Scoring system based on tail-outlier identification
+ *
+ * @param tScore matrix of real numbers where to store the results of this algorithm
+ * @param dta matrix of data (unsorted... they will be standardized at the end of this routine)
+ * @param n number of records
+ * @param p number of variables
+ */
 static inline void tail_check(double *tScore, double *dta, int n, int p) {
       int i;
       #if __VOPENMP
@@ -329,14 +329,14 @@ static inline void tail_check(double *tScore, double *dta, int n, int p) {
 }
 
 /**
-* @brief Scoring system based on weighted tail-outlier identification
-*
-* @param tScore matrix of real numbers where to store the results of this algorithm
-* @param dta matrix of data (unsorted... they will be standardized at the end of this routine)
-* @param wt vector of weights
-* @param n number of records
-* @param p number of variables
-*/
+ * @brief Scoring system based on weighted tail-outlier identification
+ *
+ * @param tScore matrix of real numbers where to store the results of this algorithm
+ * @param dta matrix of data (unsorted... they will be standardized at the end of this routine)
+ * @param wt vector of weights
+ * @param n number of records
+ * @param p number of variables
+ */
 static inline void wtail_check(double *tScore, double *dta, double *wt, int n, int p) {
       int i;
       #if __VOPENMP
@@ -349,14 +349,14 @@ static inline void wtail_check(double *tScore, double *dta, double *wt, int n, i
 }
 
 /**
-* @brief Double GEneral Matrix Multiplication
-*
-* @param res empty array where to store A %*% B (column-major format)
-* @param A input matrix (column-major format) on the left of the product
-* @param dimA number of rows and columns of the matrix A
-* @param B input matrix (column-major format) on the right of the product
-* @param dimB number of rows and columns of the matrix B
-*/
+ * @brief Double GEneral Matrix Multiplication
+ *
+ * @param res empty array where to store A %*% B (column-major format)
+ * @param A input matrix (column-major format) on the left of the product
+ * @param dimA number of rows and columns of the matrix A
+ * @param B input matrix (column-major format) on the right of the product
+ * @param dimB number of rows and columns of the matrix B
+ */
 static inline void dgemm(double *res, double *A, int *dimA, double *B, int *dimB) {
     int i, j, k;
     int b, c;
@@ -375,15 +375,15 @@ static inline void dgemm(double *res, double *A, int *dimA, double *B, int *dimB
                 }
             }
         }
-    } 
+    }
 }
- 
+
 /**
-* @brief Normalize the matrix by variable
-*
-* @param E input matrix of data to normalize
-* @param dim array containing the number of rows and columns
-*/
+ * @brief Normalize the matrix by variable
+ *
+ * @param E input matrix of data to normalize
+ * @param dim array containing the number of rows and columns
+ */
 static inline void normalize(double *E, int *dim) {
     int i, j;
     double mae;
@@ -405,22 +405,22 @@ static inline void normalize(double *E, int *dim) {
         }
         /* Normalization */
         if (mae > 0.0 && nm > 0) {
-            mae = (double) nm / mae;           
+            mae = (double) nm / mae;
             for (i = 0; i < *dim; i++) {
                 E[*dim * j + i] *= mae;
             }
         }
     }
-} 
+}
 
 /**
-* @brief Populate a parametric matrix for a linear decomposition of the data matrix
-*
-* @param mat an zero/empty (p x p) matrix (column-major format)
-* @param dta a (n x p) matrix of data (stored by column, i.e. column-major format)
-* @parma wt a pointer to a vector of weights (zero if no weights are used)
-* @param dim an integer array storing the number of data points (n) and number of variables (p)
-*/
+ * @brief Populate a parametric matrix for a linear decomposition of the data matrix
+ *
+ * @param mat an zero/empty (p x p) matrix (column-major format)
+ * @param dta a (n x p) matrix of data (stored by column, i.e. column-major format)
+ * @parma wt a pointer to a vector of weights (zero if no weights are used)
+ * @param dim an integer array storing the number of data points (n) and number of variables (p)
+ */
 static inline void init_param(double *mat, double *dta, double *wt, int *dim) {
     int i, j, k;
     double tmp, x, y, n, w;
@@ -442,7 +442,7 @@ static inline void init_param(double *mat, double *dta, double *wt, int *dim) {
                         x -= (double) (x < -1.0) * (x + 1.0);
                         y -= (double) (y > 1.0) * (y - 1.0);
                         y -= (double) (y < -1.0) * (y + 1.0);
-                        tmp += x * y * w; 
+                        tmp += x * y * w;
                         n += w;
                     }
                 }
@@ -458,14 +458,14 @@ static inline void init_param(double *mat, double *dta, double *wt, int *dim) {
 }
 
 /**
-* @brief Computing the model residuals based on a linear algebra approach
-*
-* @param res Pointer to an empty matrix (to be populated with residuals)
-* @param A Pointer to a matrix of data
-* @param dimA Pointer to a vector of dimension for the matrix `A`
-* @param R Pointer to a matrix of parameters
-* @param dimR Pointer to a vector of dimension for the matrix `R`
-*/
+ * @brief Computing the model residuals based on a linear algebra approach
+ *
+ * @param res Pointer to an empty matrix (to be populated with residuals)
+ * @param A Pointer to a matrix of data
+ * @param dimA Pointer to a vector of dimension for the matrix `A`
+ * @param R Pointer to a matrix of parameters
+ * @param dimR Pointer to a vector of dimension for the matrix `R`
+ */
 static inline void residuals(double *res, double *A, int *dimA, double *R, int *dimR) {
     int i, j, pos;
     double fixa;
@@ -486,13 +486,13 @@ static inline void residuals(double *res, double *A, int *dimA, double *R, int *
 }
 
 /**
-* @brief Compute the matrix-valued gradient of a robust objective function
-*
-* @param grd_v Pointer to the gradient matrix
-* @param param Pointer to the parameter matrix
-* @param len Pointer to the length of `param` and `grd_v`
-* @param info Pointer to a structured data (passed as a void)
-*/
+ * @brief Compute the matrix-valued gradient of a robust objective function
+ *
+ * @param grd_v Pointer to the gradient matrix
+ * @param param Pointer to the parameter matrix
+ * @param len Pointer to the length of `param` and `grd_v`
+ * @param info Pointer to a structured data (passed as a void)
+ */
 static void mat_val_grad(double *grd_v, double *param, int *len, void *info) {
     mydata_str dta = *(mydata_str *) info;
     int const n = dta.dimA[0];
@@ -533,16 +533,16 @@ static void mat_val_grad(double *grd_v, double *param, int *len, void *info) {
 }
 
 /**
-* It computes the gradient of the objective function, updates the momentum and the second order
-* momentum, and then updates the parameters using the Lion Algorithm
-*
-* @param param the parameters to be optimized
-* @param len the length of the parameter vector
-* @param n_iter number of iterations 0.05, 10L)
+ * It computes the gradient of the objective function, updates the momentum and the second order
+ * momentum, and then updates the parameters using the Lion Algorithm
+ *
+ * @param param the parameters to be optimized
+ * @param len the length of the parameter vector
+ * @param n_iter number of iterations 0.05, 10L)
 
-* @param info a pointer to a structure that contains the data and other information
-* @param grad a routine that computes the gradient of the objective function
-*/
+ * @param info a pointer to a structure that contains the data and other information
+ * @param grad a routine that computes the gradient of the objective function
+ */
 static inline void lion(double *param, int *len, int *n_iter, void *info,
           void (*grad)(double *, double *, int *, void *)) {
     int t, i, np = *len;
@@ -589,16 +589,16 @@ static inline void lion(double *param, int *len, int *n_iter, void *info,
     if (grd_v) mi_free(grd_v);
     if (stp_o) mi_free(stp_o);
     if (old_w) mi_free(old_w);
-} 
+}
 
 /**
-* @brief  Scoring system to identify relational outliers -- (interfaced with R, python...)
-*
-* @param rScores pointer to a vector of relational scores where to store the output
-* @param A input matrix of data (including NAs)
-* @param wt Pointer to a vector of record-level anomaly scores (used as weights)
-* @param dim array containing the number of rows and columns
-*/
+ * @brief  Scoring system to identify relational outliers -- (interfaced with R, python...)
+ *
+ * @param rScores pointer to a vector of relational scores where to store the output
+ * @param A input matrix of data (including NAs)
+ * @param wt Pointer to a vector of record-level anomaly scores (used as weights)
+ * @param dim array containing the number of rows and columns
+ */
 static inline void relat_check(double *rScore, double *A, double *wt, int *dim) {
     mydata_str mydata;
     double *E, *R;
@@ -645,19 +645,20 @@ static inline void relat_check(double *rScore, double *A, double *wt, int *dim) 
     if (E) mi_free(E);
     if (R) mi_free(R);
 }
- 
+
 /**
-* @brief Cellwise anomaly for state-level wide datasets
-*
-* @param s Pointer to an empty vector where to store the final scores
-* @param z Pointer to an empty vector for data format anomaly scores
-* @param h Pointer to an empty vector for historical anomaly scores
-* @param r Pointer to an empty vector for relational anomaly scores
-* @param t Pointer to an empty vector for tail anomaly scores
-* @param Xc Pointer to a matrix of current data
-* @param Xp Pointer to a matrix of previously reported data
-* @param dimX Pointer to a vector with the dimensions of `Xc` and `Xp`
-*/
+ * @wrapper C_cellwise
+ * @brief Cellwise anomaly detection for stratum-level wide datasets
+ *
+ * @param s Pointer to an empty vector where to store the final scores
+ * @param z Pointer to an empty vector for data format anomaly scores
+ * @param h Pointer to an empty vector for historical anomaly scores
+ * @param r Pointer to an empty vector for relational anomaly scores
+ * @param t Pointer to an empty vector for tail anomaly scores
+ * @param Xc Pointer to a matrix of current data
+ * @param Xp Pointer to a matrix of previously reported data
+ * @param dimX Pointer to a vector with the dimensions of `Xc` and `Xp`
+ */
 extern void cellwise(double *s, double *z, double *h, double *r, double *t, double *Xc, double *Xp, int *dimX, int *epochs) {
     int i;
     int len = dimX[0] * dimX[1];
@@ -677,19 +678,20 @@ extern void cellwise(double *s, double *z, double *h, double *r, double *t, doub
 }
 
 /**
-* @brief Weighted cellwise anomaly for state-level wide datasets
-*
-* @param s Pointer to an empty vector where to store the final scores
-* @param z Pointer to an empty vector for data format anomaly scores
-* @param h Pointer to an empty vector for historical anomaly scores
-* @param r Pointer to an empty vector for relational anomaly scores
-* @param t Pointer to an empty vector for tail anomaly scores
-* @param Xc Pointer to a matrix of current data
-* @param Xp Pointer to a matrix of previously reported data
-* @param dimX Pointer to a vector with the dimensions of `Xc` and `Xp`
-* @param wt Pointer to a vector of record-level anomaly scores (used as weights)
-* @param epochs Pointer to the number of gradient-descent epochs
-*/
+ * @wrapper C_wcellwise
+ * @brief Weighted cellwise anomaly detection for stratum-level wide datasets
+ *
+ * @param s Pointer to an empty vector where to store the final scores
+ * @param z Pointer to an empty vector for data format anomaly scores
+ * @param h Pointer to an empty vector for historical anomaly scores
+ * @param r Pointer to an empty vector for relational anomaly scores
+ * @param t Pointer to an empty vector for tail anomaly scores
+ * @param Xc Pointer to a matrix of current data
+ * @param Xp Pointer to a matrix of previously reported data
+ * @param dimX Pointer to a vector with the dimensions of `Xc` and `Xp`
+ * @param wt Pointer to a vector of record-level anomaly scores (used as weights)
+ * @param epochs Pointer to the number of gradient-descent epochs
+ */
 extern void wcellwise(double *s, double *z, double *h, double *r, double *t, double *Xc, double *Xp, int *dimX, double *wt, int *epochs) {
     int i;
     int len = dimX[0] * dimX[1];
@@ -709,18 +711,19 @@ extern void wcellwise(double *s, double *z, double *h, double *r, double *t, dou
 }
 
 /**
-* @brief Cellwise anomaly for state-level wide datasets using Bayesian testing
-*
-* @param s Pointer to an empty vector where to store the final scores
-* @param z Pointer to an empty vector for data format anomaly scores
-* @param h Pointer to an empty vector for historical anomaly scores
-* @param r Pointer to an empty vector for relational anomaly scores
-* @param t Pointer to an empty vector for tail anomaly scores
-* @param Xc Pointer to a matrix of current data
-* @param Xp Pointer to a matrix of previously reported data
-* @param dimX Pointer to a vector with the dimensions of `Xc` and `Xp`
-* @param epochs Pointer to the number of gradient-descent epochs
-*/
+ * @wrapper C_bayeswise
+ * @brief Cellwise anomaly for stratum-level wide datasets using Bayesian testing
+ *
+ * @param s Pointer to an empty vector where to store the final scores
+ * @param z Pointer to an empty vector for data format anomaly scores
+ * @param h Pointer to an empty vector for historical anomaly scores
+ * @param r Pointer to an empty vector for relational anomaly scores
+ * @param t Pointer to an empty vector for tail anomaly scores
+ * @param Xc Pointer to a matrix of current data
+ * @param Xp Pointer to a matrix of previously reported data
+ * @param dimX Pointer to a vector with the dimensions of `Xc` and `Xp`
+ * @param epochs Pointer to the number of gradient-descent epochs
+ */
 #ifndef MY_TEST
 extern void bayeswise(double *s, int *G, double *z, double *h, double *r, double *t, double *Xc, double *Xp, int *dimX, int *epochs) {
     int i;
@@ -742,19 +745,20 @@ extern void bayeswise(double *s, int *G, double *z, double *h, double *r, double
 }
 
 /**
-* @brief Weighted cellwise anomaly for state-level wide datasets using Bayesian testing
-*
-* @param s Pointer to an empty vector where to store the final scores
-* @param z Pointer to an empty vector for data format anomaly scores
-* @param h Pointer to an empty vector for historical anomaly scores
-* @param r Pointer to an empty vector for relational anomaly scores
-* @param t Pointer to an empty vector for tail anomaly scores
-* @param Xc Pointer to a matrix of current data
-* @param Xp Pointer to a matrix of previously reported data
-* @param dimX Pointer to a vector with the dimensions of `Xc` and `Xp`
-* @param wt Pointer to a vector of record-level anomaly scores (used as weights)
-* @param epochs Pointer to the number of gradient-descent epochs
-*/
+ * @wrapper C_wbayeswise
+ * @brief Weighted cellwise anomaly for stratum-level wide datasets using Bayesian testing
+ *
+ * @param s Pointer to an empty vector where to store the final scores
+ * @param z Pointer to an empty vector for data format anomaly scores
+ * @param h Pointer to an empty vector for historical anomaly scores
+ * @param r Pointer to an empty vector for relational anomaly scores
+ * @param t Pointer to an empty vector for tail anomaly scores
+ * @param Xc Pointer to a matrix of current data
+ * @param Xp Pointer to a matrix of previously reported data
+ * @param dimX Pointer to a vector with the dimensions of `Xc` and `Xp`
+ * @param wt Pointer to a vector of record-level anomaly scores (used as weights)
+ * @param epochs Pointer to the number of gradient-descent epochs
+ */
 extern void wbayeswise(double *s, int *G, double *z, double *h, double *r, double *t, double *Xc, double *Xp, int *dimX, double *wt, int *epochs) {
     int i;
     int len = dimX[0] * dimX[1];

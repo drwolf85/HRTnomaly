@@ -12,7 +12,7 @@
 
 /**
  * @brief Isolation tree structure
- * 
+ *
  */
 typedef struct iso_tree {
     uint32_t size;
@@ -36,7 +36,7 @@ static vector *proj;
 
 /**
  * @brief Comparison function between the values of structure `vec_proj`
- * 
+ *
  * @param aa Pointer to the first element to compare
  * @param bb Pointer to the second element to compare
  * @return in
@@ -49,9 +49,9 @@ static int cmp_vec(void const *aa, void const *bb) {
 
 /**
  * @brief Normalizing factors (i.e., vector of harmonic numbers)
- * 
+ *
  * @param n an integer number
- * @return double 
+ * @return double
  */
 static inline double cfun(uint32_t n) {
     return 2.0 * (H[n - 2] - (double) (n - 1) / (double) n);
@@ -59,7 +59,7 @@ static inline double cfun(uint32_t n) {
 
 /**
  * @brief Swap information at two pointers to `uint32_t`
- * 
+ *
  * @param a First pointer to swap
  * @param b Second pointer to swap
  */
@@ -71,19 +71,19 @@ static inline void swap(uint32_t *a, uint32_t *b) {
 
 /**
  * @brief Subsampling routine
- * 
+ *
  * @param nr Number of records in the dataset
  * @param psi Number of subsamples
  */
 static inline void sample(uint32_t nr, uint32_t psi) {
     uint32_t i;
     subs = (uint32_t *) mi_calloc(nr, sizeof(uint32_t));
-    if (subs) { 
+    if (subs) {
         if (psi == nr) {
             // #pragma omp for simd
             for (i = 0; i < nr; i++)
                 subs[i] = 1;
-        } 
+        }
         else if (psi < nr) {
             for (i = 0; i < psi; i++) subs[i] = 1;
             for (i = 0; i < nr; i++) {
@@ -98,7 +98,7 @@ static inline void sample(uint32_t nr, uint32_t psi) {
 
 /**
  * @brief Initializing projection vector
- * 
+ *
  * @param nr Number of records in the dataset
  * @param psi Number of subsamples
  */
@@ -115,7 +115,7 @@ static inline void init_proj(uint32_t nr, uint32_t psi) {
 
 /**
  * @brief Get split based on the most separated values in the projection
- * 
+ *
  * @param pstrt Position of subsamples in the sorted vector
  * @param psi Number of subsamples
  * @param szl Pointer to the size of the new left branch
@@ -138,7 +138,7 @@ static inline double get_split(uint32_t pstrt, uint32_t psi, uint32_t *szl, uint
 
 /**
  * @brief Create an isolation tree
- * 
+ *
  * @param X Pointer to input data (matrix stored in column-major format)
  * @param pstrt Position of subsamples in the sorted vector
  * @param psi Number of subsamples
@@ -146,7 +146,7 @@ static inline double get_split(uint32_t pstrt, uint32_t psi, uint32_t *szl, uint
  * @param nv Number of variables
  * @param e Current tree height (or depth)
  * @param l Height limit (or depth limit)
- * @return iTrees 
+ * @return iTrees
  */
 static iTrees * iTree(double *X, uint32_t pstrt, uint32_t psi, uint32_t nr, uint32_t nv, uint8_t e, uint8_t const l) {
     uint32_t i, j;
@@ -201,8 +201,8 @@ static iTrees * iTree(double *X, uint32_t pstrt, uint32_t psi, uint32_t nr, uint
 
 /**
  * @brief Create a Generalized Isolation Forest (GIF)
- * 
- * @param X Pointer to input data (matrix stored in column-major format) 
+ *
+ * @param X Pointer to input data (matrix stored in column-major format)
  * @param dimX Pointer to number of rows and columns of `X`
  * @param nt Pointer to number of trees
  * @param nss Pointer to subsampling size
@@ -237,11 +237,11 @@ static iTrees ** iForest(double *X, int *dimX, int *nt, int *nss) {
 
 /**
  * @brief Compute the isolation score (or path length)
- * 
+ *
  * @param x Pointer to an input vector
- * @param nv Number of variables (i.e. length of `x`) 
+ * @param nv Number of variables (i.e. length of `x`)
  * @param tree Pointer to a tree in the forest
- * @param e current path length 
+ * @param e current path length
  * @return double Isolation score
  */
 static double path_length(double *x, uint32_t nv, iTrees *tree, uint8_t e) {
@@ -263,13 +263,13 @@ static double path_length(double *x, uint32_t nv, iTrees *tree, uint8_t e) {
 
 /**
  * @brief Compute the anomaly score of a generalized isolation forest
- * 
+ *
  * @param x Pointer to an input vector
  * @param nv Number of variables
  * @param Forest Pointer to a foreset (i.e., double pointer to trees)
  * @param t Pointer to number of trees in the forest
- * @param psi Pointer to number of subsamples used to construct the trees in the forestuint32_t t, 
- * @return double 
+ * @param psi Pointer to number of subsamples used to construct the trees in the forestuint32_t t,
+ * @return double
  */
 static double enhanced_anomaly_score(double *x, int nv, iTrees **Forest, int *t, int *psi) {
     double avglen = 0.0;
@@ -285,8 +285,8 @@ static double enhanced_anomaly_score(double *x, int nv, iTrees **Forest, int *t,
 
 /**
  * @brief Free the memory allocated for a tree
- * 
- * @param tree 
+ *
+ * @param tree
  */
 static void free_tree(iTrees *tree) {
     if (tree) {
@@ -301,7 +301,7 @@ static void free_tree(iTrees *tree) {
 
 /**
  * @brief Free the memory allocated for the forest
- * 
+ *
  * @param Forest Pointer to pointer of the allocated tress
  * @param t Number of trees in the forest
  */
@@ -313,11 +313,20 @@ static inline void free_forest(iTrees **Forest, int *t) {
     if (Forest) mi_free(Forest);
 }
 
+/**
+ * @wrapper C_gif
+ * @brief Generalized Isolation Forest
+ * @param res Pointer to a vector of type `double` used to store the results
+ * @param dta Pointer to a matrix of data (in column-major format)
+ * @param dimD Pointer to the number of rows and columns of `dta`
+ * @param nt Pointer to the number of deep isolation trees to grow
+ * @param nss Pointer to the number of subsamples used for training
+ */
 extern void gif(double *res, double *dta, int *dimD, int *nt, int *nss) {
     uint32_t i, j;
     iTrees **forest;
     double *dat;
-    
+
     if (*nss <= 0) return;
     if (*nt <= 0) return;
     if (dimD[0] <= 0 || dimD[1] <= 0) return;
@@ -326,7 +335,7 @@ extern void gif(double *res, double *dta, int *dimD, int *nt, int *nss) {
     dat = (double *) mi_malloc(dimD[1] * sizeof(double));
     if (H && dat) {
         H[0] = 1.0;
-        for (i = 1; i < (uint32_t) *nss; i++) 
+        for (i = 1; i < (uint32_t) *nss; i++)
             H[i] = H[i - 1] + 1.0 / (1.0 + (double) i);
         forest = iForest(dta, dimD, nt, nss);
         if (forest) {

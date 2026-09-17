@@ -14,3 +14,4 @@
   if (nn > 0L)
     packageStartupMessage("Use the function setCores() to change the number of CPU cores.")
 }
+

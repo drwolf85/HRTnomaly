@@ -1,20 +1,20 @@
 Package: HRTnomaly
 Type: Package
 Classification/MSC-2010: 62G86
-Title: Historical, Relational, and Tail Anomaly-Detection Algorithms
-Version: 26.9.11
-Date: 2026-09-11
-Authors@R: c(person(given = "Luca",
+Title: Historical, Relational, and Tail Anomaly-Detection Algorithms 
+Version: 26.9.13
+Date: 2026-09-13
+Authors@R: c(person(given = "Luca", 
                     family = "Sartore",
                     role = "aut",
                     email = "luca.sartore@usda.gov",
                     comment = "ORCID = \"0000-0002-0446-1328\""),
-             person(given = "Luca",
+             person(given = "Luca", 
                     family = "Sartore",
                     role = "cre",
                     email = "drwolf85@gmail.com",
                     comment = "ORCID = \"0000-0002-0446-1328\""),
-             person(given = "Lu",
+             person(given = "Lu", 
                     family = "Chen",
                     role = "aut",
                     email = "lu.chen@usda.gov",
@@ -27,30 +27,30 @@ Authors@R: c(person(given = "Luca",
                     role = "aut",
                     email = "andrew.dau@usda.gov",
                     comment = "ORCID = \"0009-0008-9482-5316\""),
-             person(given = "Valbona",
+             person(given = "Valbona", 
                     family = "Bejleri",
                     role = "aut",
                     email = "valbona.bejleri@usda.gov",
                     comment = "ORCID = \"0000-0001-9828-968X\""))
 Maintainer: Luca Sartore <drwolf85@gmail.com>
 Description: The presence of outliers in a dataset can substantially bias the
-    results of statistical analyses. To correct for outliers, micro edits are
+    results of statistical analyses. To correct for outliers, micro edits are 
     manually performed on all records. A set of constraints and decision rules
     is typically used to aid the editing process. However, straightforward
     decision rules might overlook anomalies arising from disruption of linear
-    relationships. Computationally efficient methods are provided to
-    identify historical, tail, and relational anomalies at the data-entry
+    relationships. Computationally efficient methods are provided to 
+    identify historical, tail, and relational anomalies at the data-entry 
     level (Sartore et al., 2024; <doi:10.6339/24-JDS1136>). A score statistic
     is developed for each anomaly type, using a distribution-free approach
     motivated by the Bienaymé-Chebyshev's inequality, and fuzzy logic is used
     to detect cellwise outliers resulting from different types of anomalies.
     Each data entry is individually scored and individual scores are combined
     into a final score to determine anomalous entries. In contrast to fuzzy
-    logic, Bayesian bootstrap and a Bayesian test based on empirical
-    likelihoods are also provided as studied by Sartore et
-    al. (2024; <doi:10.3390/stats7040073>). These algorithms allow for a more
-    nuanced approach to outlier detection, as it can identify outliers at
-    data-entry level which are not obviously distinct from the rest of the
+    logic, Bayesian bootstrap and a Bayesian test based on empirical 
+    likelihoods are also provided as studied by Sartore et 
+    al. (2024; <doi:10.3390/stats7040073>). These algorithms allow for a more 
+    nuanced approach to outlier detection, as it can identify outliers at 
+    data-entry level which are not obviously distinct from the rest of the 
     data.
     ---
     This research was supported in part by the U.S. Department of Agriculture,
@@ -66,12 +66,4 @@ SystemRequirements: C11 compiler
 LazyLoad: yes
 NeedsCompilation: yes
 ByteCompile: TRUE
-Author: Luca Sartore [aut] (ORCID = "0000-0002-0446-1328"),
-  Luca Sartore [cre] (ORCID = "0000-0002-0446-1328"),
-  Lu Chen [aut] (ORCID = "0000-0003-3387-3484"),
-  Justin van Wart [aut],
-  Andrew Dau [aut] (ORCID = "0009-0008-9482-5316"),
-  Valbona Bejleri [aut] (ORCID = "0000-0001-9828-968X")
-URL: https://drwolf85.r-universe.dev/HRTnomaly
-BugReports: https://github.com/drwolf85/HRTnomaly/issues
-Config/roxygen2/version: 8.1.0
+

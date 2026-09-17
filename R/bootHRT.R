@@ -97,7 +97,7 @@ bootHRT <- function(a, contamination = 0.08, boot_max_it = 1000L) {
 	storage.mode(contamination) <- "double"
 	storage.mode(finScores) <- "double"
 	storage.mode(boot_max_it) <- "integer"
-	th_v <-.C(C_bayes_boot, th = double(boot_max_it), 
+	th_v <- .C(C_bayes_boot, th = double(boot_max_it), 
             boot_max_it, finScores, length(finScores), 
             contamination)$th
   mth <- mean(th_v)

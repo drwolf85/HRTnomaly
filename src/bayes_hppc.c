@@ -12,11 +12,11 @@ double const inv_thresh = 1.0 / 2.575829303548899940068; /* One percent on norma
 
 /**
  * @brief Empirical Likelihood
- * 
+ *
  * @param par A parameter value
  * @param dta Vector of data
  * @param K Length of the vector of data
- * @return double 
+ * @return double
  */
 static inline double EL(double par, double mx, int K) {
     double l = (double) K, p = 0.0, res = 0.0;
@@ -45,13 +45,13 @@ static inline double EL(double par, double mx, int K) {
 }
 
 /**
- * @brief Integrate the product of EL and prior for a given hypothesis 
- * 
+ * @brief Integrate the product of EL and prior for a given hypothesis
+ *
  * @param Hypo Binary value: 1 for regular and 0 for outlier
  * @param dta Vector of data
  * @param K Length of the vector of data
  * @param m Number of segments to perform Riemann integration
- * @return double 
+ * @return double
  */
 static inline double integ_prELik(int Hypo, double *dta, int K, int m) {
     double sm = 0.0;
@@ -62,7 +62,7 @@ static inline double integ_prELik(int Hypo, double *dta, int K, int m) {
 
     if (dta && K <= MAX_ANOM_TYPE && m > 0) {
         /* Find the max "standardized" residual for the cell*/
-        for (k = 0; k < K; k++) 
+        for (k = 0; k < K; k++)
             mx += (double) (dta[k] > mx) * (dta[k] - mx);
         /* Initialize weights and "inverse distance" scores */
         mx = -log1p(fabs(mx));
@@ -79,7 +79,7 @@ static inline double integ_prELik(int Hypo, double *dta, int K, int m) {
 
 /**
  * @brief Posterior computations over a single data entry
- * 
+ *
  * @param H_err Matrix of errors/residuals from historical analyses
  * @param R_err Matrix of errors/residuals from relational analyses
  * @param T_err Matrix of errors/residuals from distribution-tail analyses
@@ -115,7 +115,7 @@ static int post_calc(double *H_err, double *R_err, double *T_err, double *prior_
         post[1] *= tmp;
         /* Output for outliers */
         prior_mat[pos] = post[1];
-        G = (int) (post[1] > post[0]); 
+        G = (int) (post[1] > post[0]);
     }
     else {
         prior_mat[pos] = 0.0;
@@ -124,12 +124,13 @@ static int post_calc(double *H_err, double *R_err, double *T_err, double *prior_
 }
 
 /**
+ * @wrapper C_post_results
  * @brief Posterior computations over the whole dataset
- * 
+ *
  * @param H_err Matrix of errors/residuals from historical analyses
  * @param R_err Matrix of errors/residuals from relational analyses
  * @param T_err Matrix of errors/residuals from distribution-tail analyses
- * @param prior_mat Matrix of prior probabilities for the regular cases 
+ * @param prior_mat Matrix of prior probabilities for the regular cases
  *                  (`1-prior` is automatically used for cellwise outliers)
  * @param G Empty matrix of integers where to store the results
  * @param dimX Vector of dimensions of the matrices listed above

@@ -4,7 +4,7 @@
 
 Most recent versions of the following software are always preferred, however the minimal requirements are also specified. The common software required by three main-stream operative systems are provided below, and any specific requirement is treated separately:
 
-* [R software](http://www.r-project.org/): the minimal requirement is R version 4.5.0.
+* [R software](http://www.r-project.org/): the minimal requirement is R version 4.0.0.
 
 * [R packages](http://cran.r-project.org/) (it is recommended if the most recent versions of the following packages are installed):
 
@@ -41,13 +41,13 @@ install.packages("HRTnomaly")
 The other alternative to install an R package is from its source-code compressed as a tarball archive. This can be done by entering the following command into a terminal session on **Linux** and **(Mac) OS X**  :
 
 ```{bash}
-R CMD INSTALL HRTnomaly_26.9.11.tar.gz
+R CMD INSTALL HRTnomaly_26.9.13.tar.gz
 ```
 
 On **Windows**, by opening the command prompt (`cmd.exe`), it is possible to point to the proper directory with `cd`, and then install the package via `Rcmd.exe` with the following command:
 
 ```{bash}
-Rcmd.exe INSTALL HRTnomaly_26.9.11.tar.gz
+Rcmd.exe INSTALL HRTnomaly_26.9.13.tar.gz
 ```
 
 More details can be found on the "Installing packages" section of the [R-admin](https://cran.r-project.org/doc/manuals/R-admin.html) manual.

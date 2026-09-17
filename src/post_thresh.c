@@ -88,7 +88,7 @@ static double emp_per(int b, double *s, int N, double theta) {
 		/* Check for extreme cases of theta */
 		if (theta <= w[lb]) {
 			res = s[lb];
-		} 
+		}
 		else if (theta >= w[ub]) {
 			res = s[ub];
 		}
@@ -110,6 +110,15 @@ static double emp_per(int b, double *s, int N, double theta) {
 	return res;
 }
 
+/**
+ * @wrapper C_bayes_boot
+ * @brief Function to perform the Bayesian Bootstrap algorithm
+ * @param th Pointer to a double-precision vector used to save the results
+ * @param B Pointer to the number of bootstrapping replicates
+ * @param s Pointer to a double-precision vector of sampled values
+ * @param nn Pointer to the number of samples
+ * @param theta Pointer to a threshold number in the set $(0, 1)$
+ */
 extern void bayes_boot(double *th, int *B, double *s, int *nn, double *theta) {
 	int const N = nn[0];
 	int b;

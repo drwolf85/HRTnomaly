@@ -1,3 +1,55 @@
+2026-09-13 Luca Sartore <drwolf85@gmail.com>
+    * The HRTnomaly package VERSION 26.9.12 has been created
+    * Updated `DESCRIPTION` file with current information
+    * Updated `README.md` file with current GitHub version
+    * Updated `inst/INSTALL.md` file with current GitHub version
+    * Updated `src/Makevars` to avoid using mimalloc library
+    * Updated `src/Makevars.ucrt` to avoid using mimalloc library
+    * Updated `R/zzz.R` to document internal C-interfact wrappers
+    * Updated `R/bootHRT.R` to correct a coding-style typo
+    * Added `man/C_bayes_boot.Rd` to document internal C-wrappers
+    * Added `man/C_getNThreads.Rd` to document internal C-wrappers
+    * Added `man/C_normalize.Rd` to document internal C-wrappers
+    * Added `man/C_relat_res.Rd` to document internal C-wrappers
+    * Added `man/C_wcellwise.Rd` to document internal C-wrappers
+    * Added `man/C_bayeswise.Rd` to document internal C-wrappers
+    * Added `man/C_gif.Rd` to document internal C-wrappers
+    * Added `man/C_openMP_version.Rd` to document internal C-wrappers
+    * Added `man/C_setNThreads.Rd` to document internal C-wrappers
+    * Added `man/C_cellwise.Rd` to document internal C-wrappers
+    * Added `man/C_history_check.Rd` to document internal C-wrappers
+    * Added `man/C_pif.Rd` to document internal C-wrappers
+    * Added `man/C_tail_check.Rd` to document internal C-wrappers
+    * Added `man/C_dif.Rd` to document internal C-wrappers
+    * Added `man/C_history_res.Rd` to document internal C-wrappers
+    * Added `man/C_post_results.Rd` to document internal C-wrappers
+    * Added `man/C_tail_res.Rd` to document internal C-wrappers
+    * Added `man/C_getNCores.Rd` to document internal C-wrappers
+    * Added `man/C_isOmp.Rd` to document internal C-wrappers
+    * Added `man/C_relat_check.Rd` to document internal C-wrappers
+    * Added `man/C_wbayeswise.Rd` to document internal C-wrappers
+    * Updated doxygen tags in `src/bayes_hp`
+    * Updated doxygen tags in `src/cellwise.c`
+    * Updated doxygen tags in `src/dif.c`
+    * Updated doxygen tags in `src/fuzzyHRT.c`
+    * Updated doxygen tags in `src/gif.c`
+    * Updated doxygen tags in `src/HRTnomaly.c`
+    * Updated doxygen tags in `src/pif.c`
+    * Updated doxygen tags in `src/post_thresh.c`
+
+2026-09-12 Luca Sartore <drwolf85@gmail.com>
+    * The HRTnomaly package VERSION 26.9.12 has been created
+    * Updated `DESCRIPTION` file with current information
+    * Updated `README.md` file with current GitHub version
+    * Updated `inst/INSTALL.md` file with current GitHub version
+    * Updated `src/allocator.h` to react to the flag `MI_CRAN_COMPLIANT`
+    * Updated `src/cellwise.c` to include the header file `src/allocator.h`
+    * Updated `src/dif.c` to include the header file `src/allocator.h`
+    * Updated `src/fuzzyHRT.c` to include the header file `src/allocator.h`
+    * Updated `src/gif.c` to include the header file `src/allocator.h`
+    * Updated `src/pif.c` to include the header file `src/allocator.h`
+    * Updated `src/post_thresh.c` to include the header file `src/allocator.h`
+
 2026-09-11 Luca Sartore <drwolf85@gmail.com>
     * The HRTnomaly package VERSION 26.9.11 has been created
     * Updated `DESCRIPTION` file with current information
@@ -56,6 +108,7 @@
     * Exchange the arguments of the function written in `R/print.checkwise.R`
     * Exchange the arguments of the function documented
       in `man/print.checkwise.Rd`
+    * Included `src/allocator.h` to manage allocation library
 
 2026-09-09 Luca Sartore <drwolf85@gmail.com>
     * The HRTnomaly package VERSION 26.9.9 has been created

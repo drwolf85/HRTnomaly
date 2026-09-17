@@ -105,14 +105,15 @@ void group_normalize(double *res, double *dta, int *dim, int *gr, int g) {
 }
 
 /**
-@brief Robust normalization of each columns by group
-@param dta input dataset
-@param dim size of the input dataset
-@param gr  integer vector with group ids
-@param ng  pointer to total number of groups
-@param res pointer to the residual matrix
-		  (assumed to be already initialized to zeros)
-*/
+ * @wrapper C_normalize
+ * @brief Robust normalization of each columns by group
+ * @param dta input dataset
+ * @param dim size of the input dataset
+ * @param gr  integer vector with group ids
+ * @param ng  pointer to total number of groups
+ * @param res pointer to the residual matrix
+ * 		  (assumed to be already initialized to zeros)
+ */
 extern void normalize(double *dta, int *dim, int *gr, int *ng, double *res) {
 	int i, g;
 	#if __VOPENMP
@@ -126,6 +127,7 @@ extern void normalize(double *dta, int *dim, int *gr, int *ng, double *res) {
 }
 
 /**
+ * @wrapper C_history_check
  * @brief Scoring system for zeros and historical outliers
  * @param hScore pointer to an empty vector (for the output of historical outliers)
  * @param zScore pointer to an empty vector (for the output of zeros or negative values)
@@ -201,6 +203,7 @@ void group_tail(double *res, double *dta, int *dim, int *gr, int g) {
 }
 
 /**
+ * @wrapper C_tail_check
  * @brief Checking distribution tails of each columns by group
  * @param dta input dataset
  * @param dim size of the input dataset
@@ -278,7 +281,7 @@ void col_check(double *E, double *A, int *dim, int s) {
 			tmp = 0.0;
 			for (i = 0; i < dim[1] - 1; i++)
 				tmp += Q[*dim * i + j] * qty[i];
-			E[*dim * s + j] = fabs(A[*dim * s + j] - tmp); 
+			E[*dim * s + j] = fabs(A[*dim * s + j] - tmp);
 			v += E[*dim * s + j] * E[*dim * s + j];
 		}
 		v = sqrt(v / (double) (dim[0] - 1));
@@ -293,6 +296,7 @@ void col_check(double *E, double *A, int *dim, int s) {
 }
 
 /**
+ * @wrapper C_relat_check
  * @brief Checking for relational outliers
  * @param A input matrix
  * @param dim size of input matrix
@@ -324,6 +328,7 @@ extern void relat_check(double *A, int *dim) { /** FIXME: introduce new pointer 
 /****************************************************/
 
 /**
+ * @wrapper C_history_res
  * @brief Residual system for historical outliers and zeros scores
  * @param hRes pointer to an empty vector (for the output of historical residuals)
  * @param zScore pointer to an empty vector (for the output of zeros or negative values)
@@ -357,6 +362,7 @@ extern void history_res(double *hRes, double *zScore, double *x, double *w, int 
 }
 
 /**
+ * @wrapper C_tail_res
  * @brief Computing the residuals for checking distribution tails of each columns by group
  * @param dta input dataset
  * @param dim size of the input dataset
@@ -445,6 +451,7 @@ void col_res(double *E, double *A, int *dim, int s) { /** FIXME: introduce new p
 }
 
 /**
+ * @wrapper C_relat_res
  * @brief Residuals from linear models to check relational outliers
  * @param A input matrix
  * @param dim size of input matrix
